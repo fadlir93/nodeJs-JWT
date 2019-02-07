@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express()
+const user = require('./routes/user.route')
 const mongoose = require('mongoose');
 
 const PORT = 3000;
@@ -19,3 +20,5 @@ app.get('/checking', function(req, res) {
         "Tutorial" : "Welcome to the node express JWT Tutorial"
     });
 })
+
+app.use('/user', user)
