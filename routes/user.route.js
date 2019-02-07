@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = require('../model/user.model');
+const jwt = require('jsonwebtoken');
 
 router.post('/signup', function(req, res) {
     bcrypt.hash(req.body.password, 10, function(err, hash) {
@@ -41,9 +42,18 @@ router.post('/signin', function(req, res) {
                 });
             }
             if(result) {
+                const JWTToken = jwt.sign({
+                    email: user.email,
+                    _id: user._id
+                },
+                'secret',
+                {
+                    expiresIn: '2h'
+                });
                 return res.status(200).json({
-                    success: 'Welcome to the JWT Auth'
-                })
+                    success: 'Welcome to the JWT Auth',
+                    token: JWTToken
+                });
             }
             return res.status(401).json({
                 failed: 'Unauthorized Access'
