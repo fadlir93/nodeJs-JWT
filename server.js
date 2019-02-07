@@ -8,7 +8,7 @@ const PORT = 3000;
 
 mongoose.connect('mongodb://localhost/jwtauth');
 
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
 app.listen(PORT, function() {
